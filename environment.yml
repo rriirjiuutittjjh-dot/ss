@@ -1,6 +1,0 @@
-name: myenv
-dependencies:
-  - python=3.9
-  - numpy
-  - pandas
-  - jupyter
