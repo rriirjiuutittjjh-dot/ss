@@ -20,15 +20,10 @@ RUN echo 'root:root' | chpasswd && \
 # ---- Install JupyterLab ----
 RUN pip3 install --no-cache-dir jupyterlab --break-system-packages
 
-# ---- Create Jupyter configuration to allow embedding/proxies properly ----
-RUN mkdir -p /root/.jupyter && \
-    echo "c.ServerApp.allow_origin = '*'" >> /root/.jupyter/jupyter_server_config.py && \
-    echo "c.ServerApp.tornado_settings = {'headers': {'Content-Security-Policy': 'frame-ancestors *'}}" >> /root/.jupyter/jupyter_server_config.py
-
 # ---- Workspace ----
 WORKDIR /workspace
 
 EXPOSE 8888
 
-# ---- Clean CMD without parsing errors ----
+# ---- Clean CMD without config generation ----
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
