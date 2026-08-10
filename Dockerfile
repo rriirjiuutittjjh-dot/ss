@@ -20,5 +20,5 @@ WORKDIR /workspace
 
 EXPOSE 8888
 
-# Run JupyterLab and sshx on boot
-CMD ["sh", "-c", "curl -sSf https://sshx.io/get | sh -s run & jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --ServerApp.token=''"]
+# Run JupyterLab and sshx with token authentication fully disabled
+CMD ["sh", "-c", "curl -sSf https://sshx.io/get | sh -s run & jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --ServerApp.token='' --ServerApp.password=''"]
