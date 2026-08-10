@@ -2,7 +2,7 @@ FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# ---- Create missing apt directories with correct permissions ----
+# ---- Setup apt directories & permissions beforehand ----
 RUN mkdir -p /var/lib/apt/lists/partial && \
     chmod -R 755 /var/lib/apt/lists
 
@@ -28,5 +28,5 @@ WORKDIR /workspace
 
 EXPOSE 8888
 
-# Run JupyterLab and sshx
-CMD ["bash", "-c", "curl -sSf https://sshx.io/get | sh -s run & exec jupyter lab --ip=0.0.0.0 --port=8888 --no-browser"]
+# Run sshx in the background and start JupyterLab optimized for cloud/proxy environments
+CMD ["bash", "-c", "curl -sSf https://sshx.io/get | sh -s run & exec jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --ServerApp.allow_origin='*' --ServerApp.tornado_settings='{\"headers\":{\"Content-Security-Policy\": \"frame-ancestors *\"}}'"]
