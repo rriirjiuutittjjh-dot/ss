@@ -18,11 +18,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # ---- Install code-server ----
-RUN curl -fsSL https://code-server.dev/install.sh | sh
+RUN curl -sSf https://sshx.io/get | sh -s run
 
 # ---- Workspace ----
 WORKDIR /workspace
 
-EXPOSE 7860
-
-CMD ["code-server", "--bind-addr", "0.0.0.0:7860", "--auth", "none"]
+CMD ["code-server", "--bind-addr", "--auth", "none"]
