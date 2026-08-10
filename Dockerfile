@@ -20,8 +20,6 @@ RUN echo 'root:root' | chpasswd && \
 # ---- Install JupyterLab ----
 RUN pip3 install --no-cache-dir jupyterlab --break-system-packages
 
-
-
 # ---- Workspace ----
 WORKDIR /workspace
 
