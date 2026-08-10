@@ -2,12 +2,9 @@ FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# ---- Setup apt directories & permissions beforehand ----
-RUN mkdir -p /var/lib/apt/lists/partial && \
-    chmod -R 755 /var/lib/apt/lists
-
-# ---- Install system utilities ----
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# ---- Clean up partial lists and update packages safely ----
+RUN rm -rf /var/lib/apt/lists/partial* && \
+    apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
     wget \
@@ -28,5 +25,5 @@ WORKDIR /workspace
 
 EXPOSE 8888
 
-# ---- Clean Docker CMD without sshx ----
+# ---- Corrected CMD for Binder proxy compatibility ----
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--ServerApp.allow_origin='*'", "--ServerApp.tornado_settings={\"headers\":{\"Content-Security-Policy\": \"frame-ancestors *\"}}"]
