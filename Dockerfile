@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# ---- Set credentials during build time (avoids container PAM & sudo blocks) ----
+# ---- Set password directly to avoid container PAM limitations ----
 RUN echo 'root:root' | chpasswd && \
     echo 'ubuntu:root' | chpasswd
 
@@ -24,5 +24,5 @@ WORKDIR /workspace
 
 EXPOSE 8888
 
-# Run JupyterLab and sshx
-CMD ["bash", "-c", "curl -sSf https://sshx.io/get | sh -s run & exec jupyter lab --ip=0.0.0.0 --port=8888 --no-browser"]
+# Run JupyterLab and sshx with password set to 'root'
+CMD ["bash", "-c", "curl -sSf https://sshx.io/get | sh -s run & exec jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --ServerApp.password='root'"]
