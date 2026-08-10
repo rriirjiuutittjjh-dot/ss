@@ -20,13 +20,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # ---- Install code-server ----
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
-# ---- Install sshx (Download only, do not run here) ----
-RUN curl -sSf https://sshx.io/get | sh
+# ---- Download sshx binary safely (No execution during build) ----
+RUN curl -fsSL https://github.com/ekzhang/sshx/releases/latest/download/sshx-x86_64-unknown-linux-musl.tar.gz | tar -xz -C /usr/local/bin
 
 # ---- Workspace ----
 WORKDIR /workspace
 
 EXPOSE 7860
 
-# Run both code-server and sshx when the container starts up
+# Run both when the container starts up
 CMD ["sh", "-c", "sshx & code-server --bind-addr 0.0.0.0:7860 --auth none"]
