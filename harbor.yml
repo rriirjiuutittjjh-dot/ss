@@ -1,0 +1,34 @@
+# Configuration file for Harbor (harbor.yml)
+
+# 1. Basic Information
+hostname: reg.yourdomain.com
+
+# Set http or https
+http:
+  port: 80
+
+https:
+  port: 443
+  certificate: /your/path/to/cert.crt
+  private_key: /your/path/to/cert.key
+
+# 2. Administrator Credentials
+# This is the initial password for the 'admin' user on first startup
+harbor_admin_password: Harbor12345
+
+# 3. Database Configuration
+database:
+  password: rootpassword
+  # Maximum number of connections
+  max_idle_conns: 50
+
+# 4. Storage Configuration
+# Default uses local filesystem storage
+storage_service:
+  filesystem:
+    rootpath: /data/registry
+
+# 5. Data and Log Directories
+data_volume: /data
+log:
+  level: info
