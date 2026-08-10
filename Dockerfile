@@ -12,6 +12,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# ---- Set password for root and ubuntu user ----
+RUN echo 'root:root' | chpasswd && \
+    echo 'ubuntu:root' | chpasswd
+
 # ---- Install JupyterLab ----
 RUN pip3 install --no-cache-dir jupyterlab --break-system-packages
 
