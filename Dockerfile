@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     python3-dev \
     && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/partial*
 
 # ---- Set password directly to avoid container PAM limitations ----
 RUN echo 'root:root' | chpasswd && \
